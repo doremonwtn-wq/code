@@ -19,153 +19,102 @@
 
     .card {
       background: rgba(255, 255, 255, 0.97);
-      border-radius: 20px;
+      border-radius: 24px;
       box-shadow: 0 12px 48px rgba(0, 30, 80, 0.25);
-      padding: 2.2rem 2rem;
+      padding: 2rem;
       width: 100%;
-      max-width: 420px;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
     }
 
     h1 {
-      text-align: center;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: #0d47a1;
-      margin-bottom: 1.6rem;
       letter-spacing: -0.3px;
     }
 
-    /* Goal input row */
-    .goal-section {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #e3f2fd;
-      border-radius: 10px;
-      padding: 0.6rem 1rem;
-      margin-bottom: 1.6rem;
-    }
-
-    .goal-section label {
-      font-size: 0.9rem;
-      color: #1565c0;
-      font-weight: 600;
-    }
-
-    #goalInput {
-      width: 90px;
-      border: 2px solid #90caf9;
-      border-radius: 8px;
-      padding: 4px 8px;
-      font-size: 1rem;
-      color: #0d47a1;
-      font-weight: 700;
-      text-align: right;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    #goalInput:focus { border-color: #1976d2; }
-
-    /* Intake counter */
-    .intake-display {
-      text-align: center;
-      margin-bottom: 1.2rem;
-    }
+    .intake-display { text-align: center; }
 
     #intakeAmount {
-      font-size: 3.2rem;
+      font-size: 2.8rem;
       font-weight: 800;
       color: #1565c0;
       line-height: 1;
     }
 
-    .intake-sep {
-      font-size: 1.4rem;
-      color: #90a4ae;
-      margin: 0 4px;
-    }
+    .sep  { font-size: 1.3rem; color: #90a4ae; margin: 0 3px; }
+    #goalDisplay { font-size: 1.3rem; color: #78909c; font-weight: 600; }
+    .unit { display: block; font-size: 0.8rem; color: #90a4ae; margin-top: 2px; }
 
-    #goalDisplay {
-      font-size: 1.4rem;
-      color: #78909c;
-      font-weight: 600;
-    }
-
-    .intake-unit {
-      display: block;
-      font-size: 0.85rem;
-      color: #90a4ae;
-      margin-top: 2px;
-      letter-spacing: 0.5px;
-    }
-
-    /* Progress bar */
-    .progress-container {
-      background: #dde8f5;
-      border-radius: 999px;
-      height: 22px;
-      overflow: hidden;
-      margin-bottom: 1.6rem;
-    }
-
-    #progressBar {
-      height: 100%;
-      width: 0%;
-      border-radius: 999px;
-      background: #2196f3;
-      transition: width 0.4s ease, background-color 0.4s ease;
-    }
-
-    /* Quick-add buttons */
-    .buttons {
+    .goal-section {
       display: flex;
-      gap: 0.6rem;
-      margin-bottom: 0.8rem;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: #e3f2fd;
+      border-radius: 10px;
+      padding: 0.55rem 1rem;
     }
+
+    .goal-section label { font-size: 0.88rem; color: #1565c0; font-weight: 600; }
+
+    #goalInput {
+      width: 85px;
+      border: 2px solid #90caf9;
+      border-radius: 8px;
+      padding: 3px 8px;
+      font-size: 0.95rem;
+      color: #0d47a1;
+      font-weight: 700;
+      text-align: right;
+      outline: none;
+    }
+    #goalInput:focus { border-color: #1976d2; }
+
+    .buttons { display: flex; gap: 0.5rem; width: 100%; }
 
     .btn-add {
       flex: 1;
-      padding: 0.65rem 0;
+      padding: 0.6rem 0;
       border: none;
       border-radius: 999px;
       background: #1976d2;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
       transition: filter 0.15s, transform 0.1s;
     }
-
-    .btn-add:hover { filter: brightness(0.88); }
+    .btn-add:hover  { filter: brightness(0.88); }
     .btn-add:active { transform: scale(0.96); }
 
-    /* Reset button */
     #resetBtn {
       width: 100%;
-      padding: 0.55rem;
+      padding: 0.5rem;
       border: 2px solid #b0bec5;
       border-radius: 999px;
       background: transparent;
       color: #607d8b;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
-      margin-bottom: 1rem;
     }
-
     #resetBtn:hover { border-color: #78909c; color: #37474f; }
 
-    /* Celebration message */
     #goalMessage {
       display: none;
+      width: 100%;
       text-align: center;
       color: #2e7d32;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       background: #e8f5e9;
       border-radius: 10px;
-      padding: 0.7rem 1rem;
+      padding: 0.65rem 1rem;
       animation: fadeIn 0.4s ease;
     }
 
@@ -179,18 +128,77 @@
   <div class="card">
     <h1>Daily Water Tracker</h1>
 
-    <div class="goal-section">
-      <label for="goalInput">Daily Goal (ml)</label>
-      <input id="goalInput" type="number" min="1" value="2000" />
-    </div>
+    <!--
+      Bottle SVG: viewBox 0 0 200 500
+      Neck  : x=80-120, y=56-128
+      Body  : x=38-162, y=192-438
+      Fill range (FILL_TOP=192, FILL_BOTTOM=468, height=276)
+    -->
+    <svg viewBox="0 0 200 500" width="160" height="320" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Clip everything to the bottle silhouette -->
+        <clipPath id="bottleClip">
+          <path d="M 80,128
+                   L 80,56 L 120,56 L 120,128
+                   C 150,145 162,168 162,192
+                   L 162,438 Q 162,468 100,468 Q 38,468 38,438
+                   L 38,192
+                   C 38,168 50,145 80,128 Z"/>
+        </clipPath>
+      </defs>
+
+      <!-- Water fill (wave + solid body, clipped to bottle) -->
+      <g clip-path="url(#bottleClip)">
+        <!--
+          waveGroup is translated vertically by JS to set the water level.
+          The wave path is drawn with y=0 as the water surface in local coords,
+          then fills downward 500 units (clipped by bottleClip).
+          An inner animateTransform slides the wave left-right for the water effect.
+        -->
+        <g id="waveGroup" transform="translate(0,468)">
+          <path id="wavePath"
+            d="M-150,0 Q-125,-12 -100,0 Q-75,12 -50,0 Q-25,-12 0,0
+               Q25,12 50,0 Q75,-12 100,0 Q125,12 150,0 Q175,-12 200,0
+               Q225,12 250,0 Q275,-12 300,0 Q325,12 350,0
+               L350,500 L-150,500 Z"
+            fill="#2196f3">
+            <animateTransform attributeName="transform" type="translate"
+              values="-100,0; 0,0; -100,0" dur="2.5s" repeatCount="indefinite"/>
+          </path>
+        </g>
+      </g>
+
+      <!-- Bottle outline (drawn on top of water fill) -->
+      <path d="M 80,128
+               L 80,56 L 120,56 L 120,128
+               C 150,145 162,168 162,192
+               L 162,438 Q 162,468 100,468 Q 38,468 38,438
+               L 38,192
+               C 38,168 50,145 80,128 Z"
+            fill="rgba(33,150,243,0.05)" stroke="#1565c0" stroke-width="3" stroke-linejoin="round"/>
+
+      <!-- Shine highlight on bottle body -->
+      <path d="M 88,205 C 87,300 87,390 89,445"
+            stroke="rgba(255,255,255,0.55)" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+      <!-- Measurement tick marks at 75%, 50%, 25% fill levels -->
+      <line x1="42" y1="261" x2="80" y2="261" stroke="#90caf9" stroke-width="1.5" opacity="0.8"/>
+      <line x1="42" y1="330" x2="80" y2="330" stroke="#90caf9" stroke-width="1.5" opacity="0.8"/>
+      <line x1="42" y1="399" x2="80" y2="399" stroke="#90caf9" stroke-width="1.5" opacity="0.8"/>
+
+      <!-- Cap (drawn last so it sits on top) -->
+      <rect x="75" y="10" width="50" height="50" rx="9" fill="#0d47a1"/>
+      <rect x="81" y="17" width="38" height="8" rx="4" fill="rgba(255,255,255,0.22)"/>
+    </svg>
 
     <div class="intake-display">
-      <span id="intakeAmount">0</span><span class="intake-sep">/</span><span id="goalDisplay">2000</span>
-      <span class="intake-unit">ml consumed today</span>
+      <span id="intakeAmount">0</span><span class="sep">/</span><span id="goalDisplay">2000</span>
+      <span class="unit">ml consumed today</span>
     </div>
 
-    <div class="progress-container">
-      <div id="progressBar"></div>
+    <div class="goal-section">
+      <label for="goalInput">Daily Goal (ml)</label>
+      <input id="goalInput" type="number" min="1" value="2000"/>
     </div>
 
     <div class="buttons">
@@ -207,42 +215,45 @@
   <script>
     const state = { intake: 0, goal: 2000 };
 
+    // SVG y-coordinates of the bottle's fillable zone
+    const FILL_TOP    = 192;
+    const FILL_BOTTOM = 468;
+    const FILL_HEIGHT = FILL_BOTTOM - FILL_TOP; // 276
+
+    const waveGroup = document.getElementById('waveGroup');
+    const wavePath  = document.getElementById('wavePath');
     const intakeEl  = document.getElementById('intakeAmount');
     const goalEl    = document.getElementById('goalDisplay');
-    const bar       = document.getElementById('progressBar');
     const msgEl     = document.getElementById('goalMessage');
-    const goalInput = document.getElementById('goalInput');
 
     function render() {
-      const pct = Math.min((state.intake / state.goal) * 100, 100);
+      const pct    = Math.min(state.intake / state.goal, 1);
+      const waterY = FILL_BOTTOM - pct * FILL_HEIGHT;
+
+      // Slide water level up/down
+      waveGroup.setAttribute('transform', `translate(0, ${waterY})`);
+
+      // Blue → green when goal is reached
+      wavePath.setAttribute('fill', pct >= 1 ? '#43a047' : '#2196f3');
+
       intakeEl.textContent = state.intake;
       goalEl.textContent   = state.goal;
-      bar.style.width      = pct + '%';
-      bar.style.background = pct >= 100 ? '#43a047' : '#2196f3';
 
-      const reached = state.intake >= state.goal;
-      if (reached) {
+      if (state.intake >= state.goal) {
         msgEl.style.display = 'block';
         msgEl.style.animation = 'none';
-        void msgEl.offsetWidth; // reflow to restart animation
+        void msgEl.offsetWidth;
         msgEl.style.animation = '';
       } else {
         msgEl.style.display = 'none';
       }
     }
 
-    function addWater(ml) {
-      state.intake += ml;
-      render();
-    }
+    function addWater(ml)  { state.intake += ml; render(); }
+    function resetIntake() { state.intake = 0;   render(); }
 
-    function resetIntake() {
-      state.intake = 0;
-      render();
-    }
-
-    goalInput.addEventListener('input', () => {
-      const val = parseInt(goalInput.value, 10);
+    document.getElementById('goalInput').addEventListener('input', function () {
+      const val = parseInt(this.value, 10);
       state.goal = val >= 1 ? val : 1;
       render();
     });
