@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Water Tracker</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0d47a1 0%, #1976d2 50%, #42a5f5 100%);
+      padding: 1rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 20px;
+      box-shadow: 0 12px 48px rgba(0, 30, 80, 0.25);
+      padding: 2.2rem 2rem;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.5rem;
+      color: #0d47a1;
+      margin-bottom: 1.6rem;
+      letter-spacing: -0.3px;
+    }
+
+    /* Goal input row */
+    .goal-section {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #e3f2fd;
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .goal-section label {
+      font-size: 0.9rem;
+      color: #1565c0;
+      font-weight: 600;
+    }
+
+    #goalInput {
+      width: 90px;
+      border: 2px solid #90caf9;
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-size: 1rem;
+      color: #0d47a1;
+      font-weight: 700;
+      text-align: right;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    #goalInput:focus { border-color: #1976d2; }
+
+    /* Intake counter */
+    .intake-display {
+      text-align: center;
+      margin-bottom: 1.2rem;
+    }
+
+    #intakeAmount {
+      font-size: 3.2rem;
+      font-weight: 800;
+      color: #1565c0;
+      line-height: 1;
+    }
+
+    .intake-sep {
+      font-size: 1.4rem;
+      color: #90a4ae;
+      margin: 0 4px;
+    }
+
+    #goalDisplay {
+      font-size: 1.4rem;
+      color: #78909c;
+      font-weight: 600;
+    }
+
+    .intake-unit {
+      display: block;
+      font-size: 0.85rem;
+      color: #90a4ae;
+      margin-top: 2px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Progress bar */
+    .progress-container {
+      background: #dde8f5;
+      border-radius: 999px;
+      height: 22px;
+      overflow: hidden;
+      margin-bottom: 1.6rem;
+    }
+
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: #2196f3;
+      transition: width 0.4s ease, background-color 0.4s ease;
+    }
+
+    /* Quick-add buttons */
+    .buttons {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .btn-add {
+      flex: 1;
+      padding: 0.65rem 0;
+      border: none;
+      border-radius: 999px;
+      background: #1976d2;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: filter 0.15s, transform 0.1s;
+    }
+
+    .btn-add:hover { filter: brightness(0.88); }
+    .btn-add:active { transform: scale(0.96); }
+
+    /* Reset button */
+    #resetBtn {
+      width: 100%;
+      padding: 0.55rem;
+      border: 2px solid #b0bec5;
+      border-radius: 999px;
+      background: transparent;
+      color: #607d8b;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+      margin-bottom: 1rem;
+    }
+
+    #resetBtn:hover { border-color: #78909c; color: #37474f; }
+
+    /* Celebration message */
+    #goalMessage {
+      display: none;
+      text-align: center;
+      color: #2e7d32;
+      font-size: 1rem;
+      font-weight: 700;
+      background: #e8f5e9;
+      border-radius: 10px;
+      padding: 0.7rem 1rem;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Daily Water Tracker</h1>
+
+    <div class="goal-section">
+      <label for="goalInput">Daily Goal (ml)</label>
+      <input id="goalInput" type="number" min="1" value="2000" />
+    </div>
+
+    <div class="intake-display">
+      <span id="intakeAmount">0</span><span class="intake-sep">/</span><span id="goalDisplay">2000</span>
+      <span class="intake-unit">ml consumed today</span>
+    </div>
+
+    <div class="progress-container">
+      <div id="progressBar"></div>
+    </div>
+
+    <div class="buttons">
+      <button class="btn-add" onclick="addWater(150)">+150 ml</button>
+      <button class="btn-add" onclick="addWater(250)">+250 ml</button>
+      <button class="btn-add" onclick="addWater(500)">+500 ml</button>
+    </div>
+
+    <button id="resetBtn" onclick="resetIntake()">Reset</button>
+
+    <div id="goalMessage">Goal reached! Great work today.</div>
+  </div>
+
+  <script>
+    const state = { intake: 0, goal: 2000 };
+
+    const intakeEl  = document.getElementById('intakeAmount');
+    const goalEl    = document.getElementById('goalDisplay');
+    const bar       = document.getElementById('progressBar');
+    const msgEl     = document.getElementById('goalMessage');
+    const goalInput = document.getElementById('goalInput');
+
+    function render() {
+      const pct = Math.min((state.intake / state.goal) * 100, 100);
+      intakeEl.textContent = state.intake;
+      goalEl.textContent   = state.goal;
+      bar.style.width      = pct + '%';
+      bar.style.background = pct >= 100 ? '#43a047' : '#2196f3';
+
+      const reached = state.intake >= state.goal;
+      if (reached) {
+        msgEl.style.display = 'block';
+        msgEl.style.animation = 'none';
+        void msgEl.offsetWidth; // reflow to restart animation
+        msgEl.style.animation = '';
+      } else {
+        msgEl.style.display = 'none';
+      }
+    }
+
+    function addWater(ml) {
+      state.intake += ml;
+      render();
+    }
+
+    function resetIntake() {
+      state.intake = 0;
+      render();
+    }
+
+    goalInput.addEventListener('input', () => {
+      const val = parseInt(goalInput.value, 10);
+      state.goal = val >= 1 ? val : 1;
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
