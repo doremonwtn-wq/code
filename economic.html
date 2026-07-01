@@ -34,7 +34,6 @@
       align-items: center;
       justify-content: space-between;
     }
-
     .hdr-title { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.2px; }
     .hdr-sub   { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
     .hdr-date  { font-size: 0.82rem; color: var(--muted); text-align: right; }
@@ -54,14 +53,12 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
     }
-
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 1.1rem 1.3rem;
     }
-
     .card-lbl {
       font-size: 0.68rem;
       text-transform: uppercase;
@@ -69,19 +66,12 @@
       color: var(--muted);
       margin-bottom: 0.45rem;
     }
-
-    .card-val {
-      font-size: 1.75rem;
-      font-weight: 700;
-      line-height: 1;
-    }
-
+    .card-val { font-size: 1.75rem; font-weight: 700; line-height: 1; }
     .card-val small { font-size: 1rem; font-weight: 400; color: var(--muted); }
-
     .card-note { font-size: 0.73rem; margin-top: 0.4rem; }
-    .up        { color: var(--green); }
-    .dn        { color: var(--red);   }
-    .dim       { color: var(--muted); }
+    .up  { color: var(--green); }
+    .dn  { color: var(--red);   }
+    .dim { color: var(--muted); }
 
     /* ── Charts row ── */
     .charts-row {
@@ -89,14 +79,12 @@
       grid-template-columns: 3fr 2fr;
       gap: 1rem;
     }
-
     .panel {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 1.2rem 1.4rem;
     }
-
     .panel-title {
       font-size: 0.68rem;
       text-transform: uppercase;
@@ -105,28 +93,138 @@
       margin-bottom: 1rem;
     }
 
-    /* ── Donut legend ── */
+    /* ── Donut ── */
     .donut-wrap   { display: flex; align-items: center; gap: 1.5rem; }
     .donut-legend { flex: 1; display: flex; flex-direction: column; gap: 0.65rem; }
+    .legend-row   { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; }
+    .legend-dot   { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .legend-pct   { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
 
-    .legend-row {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.82rem;
+    /* ── Bond Calculator ── */
+    .calc-panel {
+      border-color: #1d4ed8;
     }
 
-    .legend-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .legend-pct  { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .calc-form {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.2fr 1.5fr 1.1fr 1fr 1fr;
+      gap: 0.75rem;
+      align-items: end;
+      margin-bottom: 1rem;
+    }
 
-    /* ── Table ── */
+    .form-field label {
+      display: block;
+      font-size: 0.66rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .form-field input,
+    .form-field select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: 0.42rem 0.6rem;
+      font-size: 0.82rem;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus { border-color: var(--accent); }
+    .form-field input::placeholder { color: #334155; }
+    .form-field select option { background: #1e293b; }
+
+    /* Remove number input spinners */
+    .form-field input[type=number]::-webkit-inner-spin-button,
+    .form-field input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; appearance: none; }
+    .form-field input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+
+    .calc-bottom {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-calc {
+      padding: 0.5rem 1.4rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: filter 0.15s;
+    }
+    .btn-calc:hover { filter: brightness(1.12); }
+
+    .btn-add-hold {
+      padding: 0.5rem 1.1rem;
+      background: transparent;
+      color: var(--green);
+      border: 1px solid var(--green);
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-add-hold:hover { background: var(--green); color: #0f172a; }
+
+    .calc-error {
+      font-size: 0.78rem;
+      color: var(--red);
+      display: none;
+    }
+
+    .results-row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .res-box {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.45rem 0.9rem;
+      min-width: 130px;
+    }
+
+    .res-box span {
+      display: block;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .res-box strong {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #60a5fa;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── Holdings Table ── */
     .tbl-panel {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
       overflow: hidden;
     }
-
     .tbl-head {
       padding: 0.9rem 1.4rem;
       border-bottom: 1px solid var(--border);
@@ -134,10 +232,20 @@
       text-transform: uppercase;
       letter-spacing: 0.8px;
       color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tbl-count {
+      background: rgba(59,130,246,0.15);
+      color: #93c5fd;
+      border-radius: 999px;
+      padding: 1px 8px;
+      font-size: 0.65rem;
+      font-weight: 700;
     }
 
     table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
-
     thead th {
       padding: 0.55rem 1.2rem;
       text-align: left;
@@ -148,13 +256,10 @@
       border-bottom: 1px solid var(--border);
       font-weight: 600;
     }
-
     thead th.r { text-align: right; }
-
     tbody tr { border-bottom: 1px solid rgba(51,65,85,0.4); }
     tbody tr:last-child { border-bottom: none; }
     tbody tr:hover { background: rgba(59,130,246,0.05); }
-
     tbody td { padding: 0.7rem 1.2rem; }
     tbody td.r { text-align: right; font-variant-numeric: tabular-nums; }
 
@@ -166,10 +271,15 @@
       font-weight: 700;
       letter-spacing: 0.3px;
     }
-
     .b-gov  { background: rgba(59,130,246,0.18); color: #93c5fd; }
     .b-corp { background: rgba(249,115,22,0.18);  color: #fdba74; }
     .b-muni { background: rgba(16,185,129,0.18);  color: #6ee7b7; }
+
+    .new-row { animation: rowIn 0.35s ease; }
+    @keyframes rowIn {
+      from { background: rgba(59,130,246,0.15); }
+      to   { background: transparent; }
+    }
   </style>
 </head>
 <body>
@@ -213,27 +323,85 @@
 
   <!-- Charts Row -->
   <div class="charts-row">
-
-    <!-- Yield Curve -->
     <div class="panel">
       <div class="panel-title">US Treasury Yield Curve</div>
       <svg id="yieldSvg" width="100%" viewBox="0 0 540 210" preserveAspectRatio="xMidYMid meet"></svg>
     </div>
-
-    <!-- Allocation Donut -->
     <div class="panel">
       <div class="panel-title">Asset Allocation</div>
       <div class="donut-wrap">
-        <svg id="donutSvg" width="130" height="130" viewBox="0 0 130 130" flex-shrink="0"></svg>
+        <svg id="donutSvg" width="130" height="130" viewBox="0 0 130 130"></svg>
         <div class="donut-legend" id="donutLegend"></div>
       </div>
     </div>
+  </div>
 
+  <!-- Bond Calculator -->
+  <div class="panel calc-panel">
+    <div class="panel-title">Bond Calculator &mdash; Enter data to compute YTM &amp; Duration</div>
+
+    <div class="calc-form">
+      <div class="form-field">
+        <label>Issuer</label>
+        <input id="cIssuer" type="text" placeholder="e.g. US Treasury" />
+      </div>
+      <div class="form-field">
+        <label>Type</label>
+        <select id="cType">
+          <option value="gov">Government</option>
+          <option value="corp">Corporate</option>
+          <option value="muni">Municipal</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Face Value</label>
+        <input id="cFace" type="number" value="100" min="1" />
+      </div>
+      <div class="form-field">
+        <label>Coupon Rate (%)</label>
+        <input id="cCoupon" type="number" placeholder="e.g. 4.500" step="0.001" min="0" />
+      </div>
+      <div class="form-field">
+        <label>Maturity Date</label>
+        <input id="cMaturity" type="date" />
+      </div>
+      <div class="form-field">
+        <label>Clean Price</label>
+        <input id="cPrice" type="number" placeholder="e.g. 98.50" step="0.01" min="0.01" />
+      </div>
+      <div class="form-field">
+        <label>Frequency</label>
+        <select id="cFreq">
+          <option value="2">Semi-Annual</option>
+          <option value="1">Annual</option>
+          <option value="4">Quarterly</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Notional ($)</label>
+        <input id="cNotional" type="number" value="100000" min="1" />
+      </div>
+    </div>
+
+    <div class="calc-bottom">
+      <button class="btn-calc" onclick="calculateBond()">Calculate</button>
+      <span class="calc-error" id="calcError"></span>
+      <div class="results-row" id="calcResults" style="display:none">
+        <div class="res-box"><span>YTM (annual)</span><strong id="resYTM">—</strong></div>
+        <div class="res-box"><span>Macaulay Duration</span><strong id="resMacDur">—</strong></div>
+        <div class="res-box"><span>Modified Duration</span><strong id="resModDur">—</strong></div>
+        <div class="res-box"><span>DV01 (per notional)</span><strong id="resDV01">—</strong></div>
+        <button class="btn-add-hold" onclick="addToHoldings()">+ Add to Holdings</button>
+      </div>
+    </div>
   </div>
 
   <!-- Holdings Table -->
-  <div class="tbl-panel">
-    <div class="tbl-head">Bond Holdings &mdash; 7 positions</div>
+  <div class="tbl-panel" id="holdingsPanel">
+    <div class="tbl-head">
+      <span>Bond Holdings</span>
+      <span class="tbl-count" id="tblCount">7 positions</span>
+    </div>
     <table>
       <thead>
         <tr>
@@ -243,7 +411,7 @@
           <th class="r">Maturity</th>
           <th class="r">Price</th>
           <th class="r">YTM</th>
-          <th class="r">Duration</th>
+          <th class="r">Mod. Duration</th>
           <th class="r">Mkt Value</th>
         </tr>
       </thead>
@@ -254,7 +422,7 @@
 </main>
 
 <script>
-  // ── Date ────────────────────────────────────────────────────────────────────
+  // ── Date ─────────────────────────────────────────────────────────────────────
   document.getElementById('hdrDate').textContent = new Date().toLocaleDateString('en-US', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
@@ -269,16 +437,12 @@
     const e = el(tag, attrs); e.textContent = content; return e;
   }
 
-  // ── Yield Curve ──────────────────────────────────────────────────────────────
+  // ── Yield Curve ───────────────────────────────────────────────────────────────
   const curve = [
-    { label: '3M',  y: 5.25 },
-    { label: '6M',  y: 5.20 },
-    { label: '1Y',  y: 4.90 },
-    { label: '2Y',  y: 4.60 },
-    { label: '5Y',  y: 4.30 },
-    { label: '10Y', y: 4.45 },
-    { label: '20Y', y: 4.75 },
-    { label: '30Y', y: 4.65 },
+    { label: '3M',  y: 5.25 }, { label: '6M',  y: 5.20 },
+    { label: '1Y',  y: 4.90 }, { label: '2Y',  y: 4.60 },
+    { label: '5Y',  y: 4.30 }, { label: '10Y', y: 4.45 },
+    { label: '20Y', y: 4.75 }, { label: '30Y', y: 4.65 },
   ];
 
   (function () {
@@ -286,11 +450,9 @@
     const W = 540, H = 210, PL = 44, PR = 12, PT = 18, PB = 30;
     const cW = W - PL - PR, cH = H - PT - PB;
     const YMIN = 4.0, YMAX = 5.5, n = curve.length;
+    const px = i => PL + (i / (n - 1)) * cW;
+    const py = v => PT + (1 - (v - YMIN) / (YMAX - YMIN)) * cH;
 
-    const px = i  => PL + (i / (n - 1)) * cW;
-    const py = v  => PT + (1 - (v - YMIN) / (YMAX - YMIN)) * cH;
-
-    // Grid lines
     [4.0, 4.5, 5.0, 5.5].forEach(v => {
       svg.append(
         el('line', { x1: PL, x2: W - PR, y1: py(v), y2: py(v), stroke: '#1e3a5f', 'stroke-width': 1 }),
@@ -298,18 +460,12 @@
       );
     });
 
-    // Area fill under the curve
     const pts = curve.map((d, i) => `${px(i)},${py(d.y)}`).join(' ');
-    svg.append(el('polygon', {
-      points: `${px(0)},${H - PB} ${pts} ${px(n - 1)},${H - PB}`,
-      fill: 'rgba(59,130,246,0.10)'
-    }));
+    svg.append(el('polygon', { points: `${px(0)},${H - PB} ${pts} ${px(n - 1)},${H - PB}`, fill: 'rgba(59,130,246,0.10)' }));
 
-    // Line
     const d = curve.map((p, i) => `${i ? 'L' : 'M'} ${px(i)} ${py(p.y)}`).join(' ');
     svg.append(el('path', { d, fill: 'none', stroke: '#3b82f6', 'stroke-width': 2.5, 'stroke-linejoin': 'round' }));
 
-    // Points + labels
     curve.forEach((p, i) => {
       const cx = px(i), cy = py(p.y);
       svg.append(
@@ -320,7 +476,7 @@
     });
   })();
 
-  // ── Donut Chart ──────────────────────────────────────────────────────────────
+  // ── Donut Chart ───────────────────────────────────────────────────────────────
   const alloc = [
     { label: 'Government', pct: 58, color: '#3b82f6' },
     { label: 'Corporate',  pct: 32, color: '#f97316' },
@@ -356,15 +512,13 @@
     alloc.forEach(seg => {
       const row = document.createElement('div');
       row.className = 'legend-row';
-      row.innerHTML = `
-        <span class="legend-dot" style="background:${seg.color}"></span>
-        <span>${seg.label}</span>
-        <span class="legend-pct">${seg.pct}%</span>`;
+      row.innerHTML = `<span class="legend-dot" style="background:${seg.color}"></span>
+        <span>${seg.label}</span><span class="legend-pct">${seg.pct}%</span>`;
       legend.appendChild(row);
     });
   })();
 
-  // ── Bond Table ────────────────────────────────────────────────────────────────
+  // ── Bond Table (dynamic) ──────────────────────────────────────────────────────
   const bonds = [
     { issuer: 'US Treasury', type: 'gov',  coupon: 4.250, maturity: '2026-05-31', price:  98.92, ytm: 4.85, dur: 1.82, val: 245300 },
     { issuer: 'US Treasury', type: 'gov',  coupon: 3.875, maturity: '2028-08-15', price:  96.45, ytm: 4.65, dur: 3.71, val: 192900 },
@@ -375,25 +529,148 @@
     { issuer: 'NY Muni',     type: 'muni', coupon: 3.500, maturity: '2029-07-01', price:  98.20, ytm: 3.90, dur: 4.82, val:  98200 },
   ];
 
-  const AVG_YTM = 4.58;
   const badgeClass = { gov: 'b-gov', corp: 'b-corp', muni: 'b-muni' };
-  const badgeLabel = { gov: 'Gov', corp: 'Corp', muni: 'Muni' };
-  const tbody = document.getElementById('bondTbody');
+  const badgeLabel = { gov: 'Gov',  corp: 'Corp',  muni: 'Muni'  };
 
-  bonds.forEach(b => {
-    const ytmColor = b.ytm > AVG_YTM ? '#f87171' : '#6ee7b7';
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${b.issuer}</td>
-      <td><span class="badge ${badgeClass[b.type]}">${badgeLabel[b.type]}</span></td>
-      <td class="r">${b.coupon.toFixed(3)}%</td>
-      <td class="r">${b.maturity}</td>
-      <td class="r">${b.price.toFixed(2)}</td>
-      <td class="r" style="color:${ytmColor}">${b.ytm.toFixed(2)}%</td>
-      <td class="r">${b.dur.toFixed(2)}</td>
-      <td class="r">$${b.val.toLocaleString()}</td>`;
-    tbody.appendChild(tr);
-  });
+  function avgYTM() {
+    return bonds.reduce((s, b) => s + b.ytm, 0) / bonds.length;
+  }
+
+  function renderTable(highlightLast = false) {
+    const avg = avgYTM();
+    const tbody = document.getElementById('bondTbody');
+    tbody.innerHTML = '';
+    bonds.forEach((b, idx) => {
+      const ytmColor = b.ytm > avg ? '#f87171' : '#6ee7b7';
+      const tr = document.createElement('tr');
+      if (highlightLast && idx === bonds.length - 1) tr.className = 'new-row';
+      tr.innerHTML = `
+        <td>${b.issuer}</td>
+        <td><span class="badge ${badgeClass[b.type]}">${badgeLabel[b.type]}</span></td>
+        <td class="r">${b.coupon.toFixed(3)}%</td>
+        <td class="r">${b.maturity}</td>
+        <td class="r">${b.price.toFixed(2)}</td>
+        <td class="r" style="color:${ytmColor}">${b.ytm.toFixed(2)}%</td>
+        <td class="r">${b.dur.toFixed(2)}</td>
+        <td class="r">$${b.val.toLocaleString()}</td>`;
+      tbody.appendChild(tr);
+    });
+    document.getElementById('tblCount').textContent = bonds.length + ' position' + (bonds.length !== 1 ? 's' : '');
+  }
+
+  renderTable();
+
+  // ── Bond Calculator ───────────────────────────────────────────────────────────
+  let lastCalc = null;
+
+  // Newton-Raphson YTM solver
+  // Returns the periodic yield; annualized = y * freq
+  function solveYTM(price, couponPerPeriod, periods, face) {
+    let y = (couponPerPeriod * periods + face - price) / (periods * (face + price) / 2);
+    y = Math.max(y / periods, 1e-6); // rough initial guess, per period
+
+    for (let i = 0; i < 300; i++) {
+      let pv = 0, dpv = 0;
+      for (let t = 1; t <= periods; t++) {
+        const disc = Math.pow(1 + y, t);
+        pv  += couponPerPeriod / disc;
+        dpv -= t * couponPerPeriod / (disc * (1 + y));
+      }
+      const discN = Math.pow(1 + y, periods);
+      pv  += face / discN;
+      dpv -= periods * face / (discN * (1 + y));
+
+      const diff = pv - price;
+      if (Math.abs(diff) < 1e-10) break;
+      if (Math.abs(dpv) < 1e-15) break;
+      y -= diff / dpv;
+    }
+    return y;
+  }
+
+  function yearsUntil(dateStr) {
+    return (new Date(dateStr) - new Date()) / (365.25 * 24 * 3600 * 1000);
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('calcError');
+    el.textContent = msg;
+    el.style.display = msg ? 'inline' : 'none';
+    document.getElementById('calcResults').style.display = 'none';
+  }
+
+  function calculateBond() {
+    showError('');
+
+    const issuer   = document.getElementById('cIssuer').value.trim() || 'Unknown';
+    const type     = document.getElementById('cType').value;
+    const face     = parseFloat(document.getElementById('cFace').value);
+    const couponPct= parseFloat(document.getElementById('cCoupon').value);
+    const matDate  = document.getElementById('cMaturity').value;
+    const price    = parseFloat(document.getElementById('cPrice').value);
+    const freq     = parseInt(document.getElementById('cFreq').value);
+    const notional = parseFloat(document.getElementById('cNotional').value);
+
+    if (!matDate)           return showError('Maturity date is required.');
+    if (isNaN(couponPct))   return showError('Coupon rate is required.');
+    if (isNaN(price) || price <= 0) return showError('Price must be greater than 0.');
+    if (isNaN(face)  || face  <= 0) return showError('Face value must be greater than 0.');
+    if (isNaN(notional) || notional <= 0) return showError('Notional must be greater than 0.');
+
+    const years = yearsUntil(matDate);
+    if (years <= 0) return showError('Maturity date must be in the future.');
+
+    const periods         = Math.max(1, Math.round(years * freq));
+    const couponPerPeriod = (couponPct / 100 * face) / freq;
+
+    // ── YTM ──
+    const yPeriodic = solveYTM(price, couponPerPeriod, periods, face);
+    const ytmAnnual = yPeriodic * freq * 100; // annualized %
+
+    // ── Macaulay Duration ──
+    let wNum = 0, wDen = 0;
+    for (let t = 1; t <= periods; t++) {
+      const pv = couponPerPeriod / Math.pow(1 + yPeriodic, t);
+      wNum += (t / freq) * pv;
+      wDen += pv;
+    }
+    const pvFace = face / Math.pow(1 + yPeriodic, periods);
+    wNum += (periods / freq) * pvFace;
+    wDen += pvFace;
+    const macDur = wNum / wDen; // years
+
+    // ── Modified Duration ──
+    const modDur = macDur / (1 + yPeriodic); // years
+
+    // ── DV01 (dollar value of 1 bp, on notional) ──
+    const dv01 = modDur * (price / face) * notional * 0.0001;
+
+    // ── Display ──
+    document.getElementById('resYTM').textContent    = ytmAnnual.toFixed(4) + '%';
+    document.getElementById('resMacDur').textContent = macDur.toFixed(4) + ' yrs';
+    document.getElementById('resModDur').textContent = modDur.toFixed(4) + ' yrs';
+    document.getElementById('resDV01').textContent   = '$' + dv01.toFixed(2);
+    document.getElementById('calcResults').style.display = 'flex';
+
+    // Stash for "Add to Holdings"
+    lastCalc = {
+      issuer,
+      type,
+      coupon:   couponPct,
+      maturity: matDate,
+      price:    price,
+      ytm:      parseFloat(ytmAnnual.toFixed(2)),
+      dur:      parseFloat(modDur.toFixed(2)),
+      val:      Math.round((price / face) * notional),
+    };
+  }
+
+  function addToHoldings() {
+    if (!lastCalc) return;
+    bonds.push({ ...lastCalc });
+    renderTable(true);
+    document.getElementById('holdingsPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 </script>
 
 </body>
