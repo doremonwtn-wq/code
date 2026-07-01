@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fixed Income Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0f172a;
+      --surface: #1e293b;
+      --border:  #334155;
+      --text:    #e2e8f0;
+      --muted:   #64748b;
+      --accent:  #3b82f6;
+      --green:   #10b981;
+      --red:     #ef4444;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hdr-title { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.2px; }
+    .hdr-sub   { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .hdr-date  { font-size: 0.82rem; color: var(--muted); text-align: right; }
+    .hdr-date strong { display: block; font-size: 0.9rem; color: var(--text); }
+
+    /* ── Main layout ── */
+    main {
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ── KPI Cards ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1.3rem;
+    }
+
+    .card-lbl {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+
+    .card-val {
+      font-size: 1.75rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .card-val small { font-size: 1rem; font-weight: 400; color: var(--muted); }
+
+    .card-note { font-size: 0.73rem; margin-top: 0.4rem; }
+    .up        { color: var(--green); }
+    .dn        { color: var(--red);   }
+    .dim       { color: var(--muted); }
+
+    /* ── Charts row ── */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 1rem;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem 1.4rem;
+    }
+
+    .panel-title {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Donut legend ── */
+    .donut-wrap   { display: flex; align-items: center; gap: 1.5rem; }
+    .donut-legend { flex: 1; display: flex; flex-direction: column; gap: 0.65rem; }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+    }
+
+    .legend-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .legend-pct  { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+    /* ── Table ── */
+    .tbl-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .tbl-head {
+      padding: 0.9rem 1.4rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+
+    thead th {
+      padding: 0.55rem 1.2rem;
+      text-align: left;
+      font-size: 0.67rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+    }
+
+    thead th.r { text-align: right; }
+
+    tbody tr { border-bottom: 1px solid rgba(51,65,85,0.4); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(59,130,246,0.05); }
+
+    tbody td { padding: 0.7rem 1.2rem; }
+    tbody td.r { text-align: right; font-variant-numeric: tabular-nums; }
+
+    .badge {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .b-gov  { background: rgba(59,130,246,0.18); color: #93c5fd; }
+    .b-corp { background: rgba(249,115,22,0.18);  color: #fdba74; }
+    .b-muni { background: rgba(16,185,129,0.18);  color: #6ee7b7; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="hdr-title">Fixed Income Dashboard</div>
+    <div class="hdr-sub">Portfolio Overview &mdash; USD</div>
+  </div>
+  <div class="hdr-date">
+    <strong id="hdrDate"></strong>
+    As of market close
+  </div>
+</header>
+
+<main>
+
+  <!-- KPI Cards -->
+  <div class="cards">
+    <div class="card">
+      <div class="card-lbl">Portfolio Value</div>
+      <div class="card-val">$1.32<small>M</small></div>
+      <div class="card-note up">+$4,210 today</div>
+    </div>
+    <div class="card">
+      <div class="card-lbl">Avg Yield to Maturity</div>
+      <div class="card-val">4.58<small>%</small></div>
+      <div class="card-note dn">-0.03% vs prev close</div>
+    </div>
+    <div class="card">
+      <div class="card-lbl">Avg Modified Duration</div>
+      <div class="card-val">3.65<small> yrs</small></div>
+      <div class="card-note dim">Interest rate sensitivity</div>
+    </div>
+    <div class="card">
+      <div class="card-lbl">DV01</div>
+      <div class="card-val">$482</div>
+      <div class="card-note dim">Dollar value per 1 bp move</div>
+    </div>
+  </div>
+
+  <!-- Charts Row -->
+  <div class="charts-row">
+
+    <!-- Yield Curve -->
+    <div class="panel">
+      <div class="panel-title">US Treasury Yield Curve</div>
+      <svg id="yieldSvg" width="100%" viewBox="0 0 540 210" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <!-- Allocation Donut -->
+    <div class="panel">
+      <div class="panel-title">Asset Allocation</div>
+      <div class="donut-wrap">
+        <svg id="donutSvg" width="130" height="130" viewBox="0 0 130 130" flex-shrink="0"></svg>
+        <div class="donut-legend" id="donutLegend"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Holdings Table -->
+  <div class="tbl-panel">
+    <div class="tbl-head">Bond Holdings &mdash; 7 positions</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Issuer</th>
+          <th>Type</th>
+          <th class="r">Coupon</th>
+          <th class="r">Maturity</th>
+          <th class="r">Price</th>
+          <th class="r">YTM</th>
+          <th class="r">Duration</th>
+          <th class="r">Mkt Value</th>
+        </tr>
+      </thead>
+      <tbody id="bondTbody"></tbody>
+    </table>
+  </div>
+
+</main>
+
+<script>
+  // ── Date ────────────────────────────────────────────────────────────────────
+  document.getElementById('hdrDate').textContent = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs) {
+    const e = document.createElementNS(NS, tag);
+    Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v));
+    return e;
+  }
+  function txt(tag, attrs, content) {
+    const e = el(tag, attrs); e.textContent = content; return e;
+  }
+
+  // ── Yield Curve ──────────────────────────────────────────────────────────────
+  const curve = [
+    { label: '3M',  y: 5.25 },
+    { label: '6M',  y: 5.20 },
+    { label: '1Y',  y: 4.90 },
+    { label: '2Y',  y: 4.60 },
+    { label: '5Y',  y: 4.30 },
+    { label: '10Y', y: 4.45 },
+    { label: '20Y', y: 4.75 },
+    { label: '30Y', y: 4.65 },
+  ];
+
+  (function () {
+    const svg = document.getElementById('yieldSvg');
+    const W = 540, H = 210, PL = 44, PR = 12, PT = 18, PB = 30;
+    const cW = W - PL - PR, cH = H - PT - PB;
+    const YMIN = 4.0, YMAX = 5.5, n = curve.length;
+
+    const px = i  => PL + (i / (n - 1)) * cW;
+    const py = v  => PT + (1 - (v - YMIN) / (YMAX - YMIN)) * cH;
+
+    // Grid lines
+    [4.0, 4.5, 5.0, 5.5].forEach(v => {
+      svg.append(
+        el('line', { x1: PL, x2: W - PR, y1: py(v), y2: py(v), stroke: '#1e3a5f', 'stroke-width': 1 }),
+        txt('text', { x: PL - 5, y: py(v) + 4, 'text-anchor': 'end', fill: '#475569', 'font-size': 10 }, v.toFixed(1) + '%')
+      );
+    });
+
+    // Area fill under the curve
+    const pts = curve.map((d, i) => `${px(i)},${py(d.y)}`).join(' ');
+    svg.append(el('polygon', {
+      points: `${px(0)},${H - PB} ${pts} ${px(n - 1)},${H - PB}`,
+      fill: 'rgba(59,130,246,0.10)'
+    }));
+
+    // Line
+    const d = curve.map((p, i) => `${i ? 'L' : 'M'} ${px(i)} ${py(p.y)}`).join(' ');
+    svg.append(el('path', { d, fill: 'none', stroke: '#3b82f6', 'stroke-width': 2.5, 'stroke-linejoin': 'round' }));
+
+    // Points + labels
+    curve.forEach((p, i) => {
+      const cx = px(i), cy = py(p.y);
+      svg.append(
+        el('circle', { cx, cy, r: 4, fill: '#1e293b', stroke: '#3b82f6', 'stroke-width': 2 }),
+        txt('text', { x: cx, y: cy - 8, 'text-anchor': 'middle', fill: '#93c5fd', 'font-size': 9 }, p.y.toFixed(2) + '%'),
+        txt('text', { x: cx, y: H - PB + 16, 'text-anchor': 'middle', fill: '#64748b', 'font-size': 10 }, p.label)
+      );
+    });
+  })();
+
+  // ── Donut Chart ──────────────────────────────────────────────────────────────
+  const alloc = [
+    { label: 'Government', pct: 58, color: '#3b82f6' },
+    { label: 'Corporate',  pct: 32, color: '#f97316' },
+    { label: 'Municipal',  pct: 10, color: '#10b981' },
+  ];
+
+  (function () {
+    const svg = document.getElementById('donutSvg');
+    const cx = 65, cy = 65, R = 50, r = 32;
+    let angle = -Math.PI / 2;
+
+    alloc.forEach(seg => {
+      const sweep = (seg.pct / 100) * 2 * Math.PI;
+      const end   = angle + sweep;
+      const large = sweep > Math.PI ? 1 : 0;
+      const [x1, y1] = [cx + R * Math.cos(angle), cy + R * Math.sin(angle)];
+      const [x2, y2] = [cx + R * Math.cos(end),   cy + R * Math.sin(end)];
+      const [x3, y3] = [cx + r * Math.cos(end),   cy + r * Math.sin(end)];
+      const [x4, y4] = [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+      svg.append(el('path', {
+        d: `M${x1},${y1} A${R},${R} 0 ${large},1 ${x2},${y2} L${x3},${y3} A${r},${r} 0 ${large},0 ${x4},${y4}Z`,
+        fill: seg.color
+      }));
+      angle = end;
+    });
+
+    svg.append(
+      txt('text', { x: cx, y: cy - 5, 'text-anchor': 'middle', fill: '#e2e8f0', 'font-size': 14, 'font-weight': 700 }, '7'),
+      txt('text', { x: cx, y: cy + 11, 'text-anchor': 'middle', fill: '#64748b', 'font-size': 10 }, 'bonds')
+    );
+
+    const legend = document.getElementById('donutLegend');
+    alloc.forEach(seg => {
+      const row = document.createElement('div');
+      row.className = 'legend-row';
+      row.innerHTML = `
+        <span class="legend-dot" style="background:${seg.color}"></span>
+        <span>${seg.label}</span>
+        <span class="legend-pct">${seg.pct}%</span>`;
+      legend.appendChild(row);
+    });
+  })();
+
+  // ── Bond Table ────────────────────────────────────────────────────────────────
+  const bonds = [
+    { issuer: 'US Treasury', type: 'gov',  coupon: 4.250, maturity: '2026-05-31', price:  98.92, ytm: 4.85, dur: 1.82, val: 245300 },
+    { issuer: 'US Treasury', type: 'gov',  coupon: 3.875, maturity: '2028-08-15', price:  96.45, ytm: 4.65, dur: 3.71, val: 192900 },
+    { issuer: 'US Treasury', type: 'gov',  coupon: 4.625, maturity: '2033-05-15', price: 100.65, ytm: 4.55, dur: 7.82, val: 301950 },
+    { issuer: 'JPMorgan',    type: 'corp', coupon: 4.500, maturity: '2025-12-15', price:  99.45, ytm: 5.10, dur: 0.95, val: 198900 },
+    { issuer: 'Apple Inc',   type: 'corp', coupon: 3.000, maturity: '2027-02-09', price:  95.80, ytm: 4.80, dur: 2.58, val: 143700 },
+    { issuer: 'Microsoft',   type: 'corp', coupon: 2.525, maturity: '2028-06-01', price:  92.35, ytm: 4.70, dur: 3.88, val: 138525 },
+    { issuer: 'NY Muni',     type: 'muni', coupon: 3.500, maturity: '2029-07-01', price:  98.20, ytm: 3.90, dur: 4.82, val:  98200 },
+  ];
+
+  const AVG_YTM = 4.58;
+  const badgeClass = { gov: 'b-gov', corp: 'b-corp', muni: 'b-muni' };
+  const badgeLabel = { gov: 'Gov', corp: 'Corp', muni: 'Muni' };
+  const tbody = document.getElementById('bondTbody');
+
+  bonds.forEach(b => {
+    const ytmColor = b.ytm > AVG_YTM ? '#f87171' : '#6ee7b7';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${b.issuer}</td>
+      <td><span class="badge ${badgeClass[b.type]}">${badgeLabel[b.type]}</span></td>
+      <td class="r">${b.coupon.toFixed(3)}%</td>
+      <td class="r">${b.maturity}</td>
+      <td class="r">${b.price.toFixed(2)}</td>
+      <td class="r" style="color:${ytmColor}">${b.ytm.toFixed(2)}%</td>
+      <td class="r">${b.dur.toFixed(2)}</td>
+      <td class="r">$${b.val.toLocaleString()}</td>`;
+    tbody.appendChild(tr);
+  });
+</script>
+
+</body>
+</html>
